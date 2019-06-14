@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spittles</title>
+</head>
+<body>
+<table border="1">
+<tr th:each="spittle : ${spittles}">
+    <td th:text="${spittle.toString()}"></td>
+</tr>
+</table>
+</body>
+</html>
