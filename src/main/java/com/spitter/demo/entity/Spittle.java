@@ -3,6 +3,9 @@ package com.spitter.demo.entity;
 import javax.persistence.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * @author wye
+ */
 @Entity
 public class Spittle {
 

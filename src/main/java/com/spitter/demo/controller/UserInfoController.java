@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
+/**
+ * @author wye
+ */
 @Controller
 public class UserInfoController {
     private SpitterRepository repository;
