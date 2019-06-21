@@ -1,22 +1,35 @@
 package com.spitter.demo.controller;
 
 import com.spitter.demo.dao.SpittleRepository;
+import com.spitter.demo.entity.Spittle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/spittles")
 public class SpittleController {
+
     private SpittleRepository repository;
 
     @Autowired
     public SpittleController(SpittleRepository repository) {
         this.repository = repository;
+    }
+
+    @GetMapping
+    public String spittle() {
+        return "sendspittle";
+    }
+
+    @PostMapping
+    public String sendSpittle(Spittle spittle) {
+        repository.save(spittle);
+        repository.flush();
+        return "redirect:/spittles/" + spittle.getId();
     }
 
     @GetMapping("/all")
@@ -26,8 +39,15 @@ public class SpittleController {
     }
 
     @GetMapping("/{id}")
-    public String spittle(Model model, @PathVariable long id) {
-        model.addAttribute("spittle", repository.findById(id));
-        return "spittle";
+    public String spittle(Model model, @PathVariable Long id) {
+        Optional<Spittle> op = repository.findById(id);
+        if (op.isPresent()) {
+            model.addAttribute("spittle", op.get());
+            return "spittle";
+        }
+        else {
+            return "error";
+        }
     }
+
 }

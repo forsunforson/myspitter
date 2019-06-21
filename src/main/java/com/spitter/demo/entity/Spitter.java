@@ -1,15 +1,24 @@
 package com.spitter.demo.entity;
 
-import java.util.concurrent.atomic.AtomicLong;
+import javax.persistence.*;
+import java.io.Serializable;
 
-public class Spitter {
-    private final Long id;
-    private final String username;
-    private final String password;
-    private static AtomicLong idGenerator = new AtomicLong(0);
+@Entity
+public class Spitter implements Serializable {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private String username;
+
+    @Column
+    private String password;
+
+    protected Spitter() {}
 
     public Spitter(String username, String password) {
-        this.id = idGenerator.getAndIncrement();
         this.username = username;
         this.password = password;
     }

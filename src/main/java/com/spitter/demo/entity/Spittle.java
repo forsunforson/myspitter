@@ -1,19 +1,21 @@
 package com.spitter.demo.entity;
 
+import javax.persistence.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Entity
 public class Spittle {
-    private final Long id;
-    private final String message;
 
-    private static AtomicLong idGenerator;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    static {
-        idGenerator = new AtomicLong(0);
-    }
+    @Column(nullable = false)
+    private String message;
+
+    private Spittle() {}
 
     public Spittle(String message) {
-        this.id = idGenerator.getAndIncrement();
         this.message = message;
     }
 

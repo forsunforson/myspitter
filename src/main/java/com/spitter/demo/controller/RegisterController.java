@@ -5,6 +5,7 @@ import com.spitter.demo.entity.Spitter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,9 +27,10 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String registration(Spitter spitter) {
-        boolean flag = repository.doRegistration(spitter);
-        if (flag) {
-            return "redirect:/spitter/" + spitter.getUsername();
+        Spitter flag = repository.save(spitter);
+        repository.flush();
+        if (flag != null) {
+            return "redirect:/spitter/id/" + spitter.getId();
         }
         else {
             return "redirect:/spitter/register";
